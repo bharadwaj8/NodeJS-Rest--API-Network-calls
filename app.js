@@ -36,7 +36,7 @@ app.get("/todos/", async (request, response) => {
     select * from todo
     where status like '%${status}%'
     and priority like '%${priority}%'
-    and todo like '%${search_q}%';`;
+    and todo like '%${search_q}%' order by id;`;
   const dbResponse = await db.all(getTodoQuery);
   response.send(dbResponse);
 });
@@ -63,3 +63,49 @@ app.post("/todos/", async (request, response) => {
 });
 
 //API 4
+app.put("/todos/:todoId/", async (request, response) => {
+  const { todoId } = request.params;
+  const { status, priority, todo } = request.query;
+  if (status !== undefined) {
+    const statusQuery = `
+        update todo 
+        set status='${status}'
+        where id=${todoId};`;
+
+    await db.run(statusQuery);
+
+    response.send("Status Updated");
+  }
+  if (priority !== undefined) {
+    const priorityQuery = `
+        update todo 
+        set priority='${priority}'
+        where id=${todoId};`;
+
+    await db.run(priorityQuery);
+
+    response.send("Priority Updated");
+  }
+  if (todo !== undefined) {
+    const todoQuery = `
+        update todo 
+        set todo='${todo}'
+        where id=${todoId};`;
+
+    await db.run(todoQuery);
+
+    response.send("Todo Updated");
+  }
+});
+
+//API 5
+app.delete("/todos/:todoId", async (request, response) => {
+  const { todoId } = request.params;
+  const deleteQuery = `
+    delete from todo where id=${todoId};`;
+
+  await db.run(deleteQuery);
+  response.send("Todo Deleted");
+});
+
+module.exports = app;
