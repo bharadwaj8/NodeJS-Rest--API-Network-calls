@@ -65,7 +65,9 @@ app.post("/todos/", async (request, response) => {
 //API 4
 app.put("/todos/:todoId/", async (request, response) => {
   const { todoId } = request.params;
-  const { status, priority, todo } = request.query;
+  const details = request.body;
+  console.log(details);
+  const { status, priority, todo } = details;
   if (status !== undefined) {
     const statusQuery = `
         update todo 
