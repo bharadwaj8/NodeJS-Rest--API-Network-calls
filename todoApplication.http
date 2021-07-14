@@ -1,5 +1,6 @@
 
-GET http://localhost:3000/todos/?status=TO%20DO
+GET   http://localhost:3000/todos/
+
 ###
 
 GET http://localhost:3000/todos/?priority=LOW
@@ -27,14 +28,29 @@ Content-Type: application/json
 ###
 
 
-PUT http://localhost:3000/todos/10/?status=DONE
+PUT http://localhost:3000/todos/10/
+Content-Type: application/json
+
+{
+    "status":"DONE"
+}
 ###
 
 
 PUT http://localhost:3000/todos/10/?priority=HIGH
+Content-Type: application/json
+
+{
+    "priority":"LOW"
+}
 ###
 
 PUT http://localhost:3000/todos/10/?todo=Some%20task
+Content-Type: application/json
+
+{
+    "todo":"Check"
+}
 
 ###
 
